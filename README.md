@@ -1,10 +1,19 @@
 # Atliq Hardware Sales Insights Dashboard
+![image](https://github.com/user-attachments/assets/82248d87-830c-4873-b9fd-dd3533d662c6)
+## Table of contents :
+- [Problem Statement](#problem-statement-)
+- [Data Analysis using MySQL](#data-analysis-using-mysql)
+- [Data Cleaning and Transformation](#data-cleaning-and-transformation)
+- [Data Modelling and DAX](#data-modelling-and-dax)
+- [Dashboard](#dashboard)
+- [Insights and Findings](#insights-and-findings)
+
 ## Problem Statement :
 AtliQ Hardware is a company that supplies computer hardware and peripherals to many clients across India.
 At Atliq Hardware sales were dropping, and sales directors weren’t getting enough insights from regional sales managers. 
 The Sales Director needed a clear view of our sales data to make better decisions and save time on manual data collection.
-- Stakeholders:-
- - Sales Director
+- Stakeholders :
+  - Sales Director
   - Marketing Team
   - Customer Service Team
   - Data and Analytics Team
@@ -25,116 +34,49 @@ add column norm_sales_amount double ;
 update transactions 
 set norm_sales_amount= case when currency ='USD' then sales_amount*75 else sales_amount end;
 ```
-Analysis of different SQL statements on the database. [SQL](#sales-analysis.sql)
+Analysis of different SQL statements on the database. [SQL](https://github.com/creator-utkarsh/Atliq-Hrdware-Sales-Insights-Dashboard/blob/main/Sales%20Analysis.sql)
 
-1.To find of all customers records
 
-SELECT * FROM sales.customers;
+## Data Cleaning and Transformation :
 
-2.To find total number of customers
+In this process, we work on data cleaning and ETL.
+- Removed blank and unnecessary rows from the zone column in the markets table.
+- Cleaned and trimmed all the tables as required.
+- Created a new table for the missing product code data which was available in transactions table but not in product table.
+- Joined the new table data with 'Product' table using the 'Append Queries' function.
+## Data modelling and DAX :
 
-SELECT count(*) From sales.customers;
+The dataset was cleaned, transformed and modeled as per STAR Schema.
 
-3.To find transactions for Chennai market (market code for chennai is Mark001
+![DataModel](https://github.com/user-attachments/assets/7ee657b8-3275-45a7-b9ec-f3d87336c232)
 
-SELECT * FROM sales.transactions where market_code='Mark001';
+Key Measure created for visualization and proper information :
+- Profit Margin % = ``` DIVIDE([Total Profit Margin],[Revenue],0) ```
+- Profit Margin Contribution % = ``` DIVIDE([Total Profit Margin],CALCULATE([Total Profit Margin],ALL('sales products'),ALL('sales 
+  customers'),ALL('sales markets'))) ```
+- Revenue = ``` SUM('sales transactions'[sales_amount]) ```
+- Revenue Contribution % = ``` DIVIDE([Revenue],CALCULATE([Revenue],ALL('sales products'),ALL('sales customers'),ALL('sales markets'))) ```
+- Revenue LY = ``` CALCULATE([Revenue],SAMEPERIODLASTYEAR('sales date'[date])) ```
+- Sales quantity = ``` SUM('sales transactions'[sales_qty]) ```
+- Total Profit Margin = ``` SUM('Sales transactions'[Profit_Margin]) ```
 
-4.To find distrinct product codes that were sold in chennai
+## Dashboard :
+Key Executive Insights :
+![image](https://github.com/user-attachments/assets/bd292530-a4f9-446a-9da1-278585192d50)
 
-SELECT distinct product_code FROM sales.transactions where market_code='Mark001';
+Profit Analysis :
+![image](https://github.com/user-attachments/assets/e006de45-3e42-44d5-80b9-a9228f0b6d70)
 
-5.To find transactions for Chennai market (market code for chennai is Mark002
+Performance Insights :
+![image](https://github.com/user-attachments/assets/6b435046-4200-47f6-9a9b-a7147dc1ba5a)
 
-SELECT * FROM sales.transactions where market_code='Mark002';
+## Insights and Findings :
+- Total Revenue and Sales Quantity in 2020: Atliq Hardware made INR 142.22M in revenue and sold 350K units. The Delhi market generated the highest revenue at INR 77.73M.
+- Brick and Mortar is the main stronghold of this business, so expansion should be in plan.
+- Bhubaneswar has been the highest ROI-generating market in the last 1 year with a profit margin of 10.5%
+- South Zone is the highest profit margin generating market and should be more focused upon.
+- Prod318 is the top performing product.
+- Electricalsara stores is the top customer with the highest revenue of 413.3 M in all four years.
+- There is some data integrity issue with the product table, many product codes are missing from it, so it must be taken care of from the source.
 
-6.To find distrinct product codes that were sold in mumbai
-
-SELECT distinct product_code FROM sales.transactions where market_code='Mark002';
-
-7.To find transactions where currency is US dollars
-
-SELECT * from sales.transactions where currency="USD";
-
-8.To find transactions in 2020 join by date table
-
-SELECT sales.transactions.*, sales.date.* FROM sales.transactions INNER JOIN sales.date ON sales.transactions.order_date=sales.date.date where sales.date.year=2020;
-
-8.To find transactions in 2019 join by date table
-
-SELECT sales.transactions.*, sales.date.* FROM sales.transactions INNER JOIN sales.date ON sales.transactions.order_date=sales.date.date where sales.date.year=2019;
-
-9.To find total revenue in year 2020,
-
-SELECT SUM(sales.transactions.sales_amount) FROM sales.transactions INNER JOIN sales.date ON sales.transactions.order_date=sales.date.date where sales.date.year=2020 and sales.transactions.currency="INR\r" or sales.transactions.currency="USD\r";
-
-10.To find total revenue in year 2019,
-
-SELECT SUM(sales.transactions.sales_amount) FROM sales.transactions INNER JOIN sales.date ON sales.transactions.order_date=sales.date.date where sales.date.year=2019 and sales.transactions.currency="INR\r" or sales.transactions.currency="USD\r";
-
-11.To find total revenue in year 2020, January Month,
-
-SELECT SUM(sales.transactions.sales_amount) FROM sales.transactions INNER JOIN sales.date ON sales.transactions.order_date=sales.date.date where sales.date.year=2020 and sales.date.month_name="January" and (sales.transactions.currency="INR\r" or sales.transactions.currency="USD\r");
-
-12.To find total revenue in year 2020, February Month,
-
-SELECT SUM(sales.transactions.sales_amount) FROM sales.transactions INNER JOIN sales.date ON sales.transactions.order_date=sales.date.date where sales.date.year=2020 and sales.date.month_name="February" and (sales.transactions.currency="INR\r" or sales.transactions.currency="USD\r");
-
-13.To find total revenue in year 2019, January Month,
-
-SELECT SUM(sales.transactions.sales_amount) FROM sales.transactions INNER JOIN sales.date ON sales.transactions.order_date=sales.date.date where sales.date.year=2020 and sales.date.month_name="January" and (sales.transactions.currency="INR\r" or sales.transactions.currency="USD\r");
-
-14.To find total revenue in year 2019, February Month,
-
-SELECT SUM(sales.transactions.sales_amount) FROM sales.transactions INNER JOIN sales.date ON sales.transactions.order_date=sales.date.date where sales.date.year=2020 and sales.date.month_name="February" and (sales.transactions.currency="INR\r" or sales.transactions.currency="USD\r");
-
-15.To find total revenue in year 2020 in Chennai
-
-SELECT SUM(sales.transactions.sales_amount) FROM sales.transactions INNER JOIN sales.date ON sales.transactions.order_date=sales.date.date where sales.date.year=2020 and sales.transactions.market_code="Mark001";
-
-16.To find total revenue in year 2020 in Mumbai
-
-SELECT SUM(sales.transactions.sales_amount) FROM sales.transactions INNER JOIN sales.date ON sales.transactions.order_date=sales.date.date where sales.date.year=2020 and sales.transactions.market_code="Mark002";
-
-Similarly, if we want different of any other particular city the market code of that city is used on the mysql workbench.
-
-Data Cleaning and ETL (Extract, Transform, Load):
-In this process, we are work on data cleaning and ETL.
-
-Step 1: Connect the MySQL database with the PowerBI desktop.
-
-Step 2: Loading data into the Power BI deskstop. This step load all the tables and created in the data base. This load option will connect with the SQL and pull all the records into power BI environment.
-
-In that model view looking up for model which form the star schema.
-
-Screenshot (4)
-
-Setp 3: Transform data with the help of Power Query
-
-Perform filtration in market’s table: In the tables perform when we click on the transform data option, we are directed to Power query editor. Power query editor is where we perform out ETL.and then we can perform data transformation i.e. Data Cleaning, Data Wrangling, Data Munging. we need to filter the rows where the values are null and filtering the data and deselecting the blank option.
-
-Perform filtration in Transaction’s table: In the table perform when we check the query in the MySQL to filter some negative values and also 0 values that appears in the table, the desired output is received.and we will perform the similar filtration in PowerBI. we have deselecting the values, don’t want in the table. The result after filtration. the zero values represent some garbage values which is not possible so we need to clean that data.
-
-Convert USD into INR in the transaction’s table: the AtliQ Hardware only works in India so the USD values are not possible. we need to convert those USD values into INR by using some formulas. Add new column - Conditional column - normalized currency where sales amount will be in INR
-
-In power query editore finding the total values having USD as currency.
-
- `=Table.AddColumn(#"Filtered Rows", "norm_sales_amount",each if [currency] = "USD" then [sales_amount]*75 else [sales_amount]`
-using this correct formula of the conversion,and converted the USD currency into INR.
-
-In MySQL Workbench find that there are duplicates of USD and INR
-
- `SELECT count(*) from sales.transactions where sales.transactions.currency="INR\r";` 
- 150000 - can't removed as it is large amount
-
- `SELECT count(*) from sales.transactions where sales.transactions.currency="INR";` 
- 279 - we can remove it as it is small record and can be considered as bad data
-
- `SELECT count(*) from sales.transactions where sales.transactions.currency="USD\r";` 
-
- `SELECT count(*) from sales.transactions where sales.transactions.currency="USD";`
-
- `SELECT * from sales.transactions where sales.transactions.currency='USD\r' or sales.transactions.currency='USD';`
-we can see that it is duplicate and for analysis its better to delete anyone of them so lets delete USD and keep USD/r. finally we will keep data with INR/r and USD/r-
-
-Data Modeling:
-And then dataset was cleaned and transformed, it was ready to the data modeled.
+## Thank You
