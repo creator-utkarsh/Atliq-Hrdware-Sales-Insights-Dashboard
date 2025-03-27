@@ -1,4 +1,4 @@
-# Atliq Hardware Sales Insights Dashboard
+# Atliq Hardware Sales Insights
 ![image](https://github.com/user-attachments/assets/82248d87-830c-4873-b9fd-dd3533d662c6)
 ## Table of contents :
 - [Problem Statement](#problem-statement-)
