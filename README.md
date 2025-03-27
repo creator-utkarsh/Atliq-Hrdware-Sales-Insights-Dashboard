@@ -25,7 +25,7 @@ add column norm_sales_amount double ;
 update transactions 
 set norm_sales_amount= case when currency ='USD' then sales_amount*75 else sales_amount end;
 ```
-Analysis of different SQL statement on data base
+Analysis of different SQL statements on the database. [SQL](#sales-analysis.sql)
 
 1.To find of all customers records
 
