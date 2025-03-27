@@ -10,28 +10,21 @@ The Sales Director needed a clear view of our sales data to make better decision
   - Data and Analytics Team
   - IT
 
-Data Analysis using MySQL :
-Completed the Data discovery and then used mySQL for data analysis.
-
-SQL database dump is in db_dump.sql file above. Download db_dump.sql file to your local computer
-
-Importing Data to MySQL workbench
-Screenshot (2)
-
-Screenshot (3)
-
-The import of data is done from an already existing MySQL file. This file has to be loaded into MySQL workbench for further data analysis.
-
-Analysis of data by looking into different tables and reflecting garbage values
-
-We can see that garbage value that the table market cantains certain values which are incorrect.
-
-SELECT * FROM sales.market;
-
-And then we can check that transacation table we can see that ceratin negative value in amount which is not possible. and we can see that certain transactions are in USD. Hence, filtration of that is also needed by converting into INR.
-
-SELECT * FROM sales.transactions;
-
+## Data Analysis using MySQL :
+Analysis of data by looking into different tables and reflecting garbage values.
+ 
+We can see that there are some garbage value in the table 'market'.
+```SQL
+SELECT * FROM market;
+```
+Then we can check the transaction table where we saw that there are some negative values in sales_amount which is not possible. Also, we can see that some transactions are in USD. Hence, filtration of that is also needed by converting it to INR.
+So I created a new column named 'norm_sales_amount', using these queries, where all the transactions are in INR only.
+```SQL
+alter table transactions
+add column norm_sales_amount double ;
+update transactions 
+set norm_sales_amount= case when currency ='USD' then sales_amount*75 else sales_amount end;
+```
 Analysis of different SQL statement on data base
 
 1.To find of all customers records
