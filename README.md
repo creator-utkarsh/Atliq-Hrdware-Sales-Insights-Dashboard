@@ -2,11 +2,11 @@
 ![image](https://github.com/user-attachments/assets/82248d87-830c-4873-b9fd-dd3533d662c6)
 ## Table of contents :
 - [Problem Statement](#problem-statement-)
-- [Data Analysis using MySQL](#data-analysis-using-mysql)
-- [Data Cleaning and Transformation](#data-cleaning-and-transformation)
-- [Data Modelling and DAX](#data-modelling-and-dax)
-- [Dashboard](#dashboard)
-- [Insights and Findings](#insights-and-findings)
+- [Data Analysis using MySQL](#data-analysis-using-mysql-)
+- [Data Cleaning and Transformation](#data-cleaning-and-transformation-)
+- [Data Modelling and DAX](#data-modelling-and-dax-)
+- [Dashboard](#dashboard-)
+- [Insights and Findings](#insights-and-findings-)
 
 ## Problem Statement :
 AtliQ Hardware is a company that supplies computer hardware and peripherals to many clients across India.
