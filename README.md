@@ -61,13 +61,13 @@ Key Measure created for visualization and proper information :
 - Total Profit Margin = ``` SUM('Sales transactions'[Profit_Margin]) ```
 
 ## Dashboard :
-Key Executive Insights :
+**Key Executive Insights :**
 ![image](https://github.com/user-attachments/assets/bd292530-a4f9-446a-9da1-278585192d50)
 
-Profit Analysis :
+**Profit Analysis :**
 ![image](https://github.com/user-attachments/assets/e006de45-3e42-44d5-80b9-a9228f0b6d70)
 
-Performance Insights :
+**Performance Insights :**
 ![image](https://github.com/user-attachments/assets/6b435046-4200-47f6-9a9b-a7147dc1ba5a)
 
 ## Insights and Findings :
